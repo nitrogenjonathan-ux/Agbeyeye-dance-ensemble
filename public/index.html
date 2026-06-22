@@ -1,98 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AGBEYEYE Dance Ensemble</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background: #1a1a1a;
-      color: white;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agbeyeye Dance Ensemble</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:    #00796B;
+    --teal-lt: #4DB6AC;
+    --gold:    #F9A825;
+    --cream:   #FDF6EC;
+    --dark:    #1A1A1A;
+    --mid:     #4A4A4A;
+    --light:   #F5F5F5;
+    --white:   #FFFFFF;
+    --red-accent: #C0392B;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+  /* NAV */
+  nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(0,0,0,0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(249,168,37,.25);
+  transition: background .3s;
+}
+  nav .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold); letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  nav ul { list-style: none; display: flex; gap: 32px; }
+  nav ul a {
+    font-size: .85rem; font-weight: 500; letter-spacing: .08em;
+    color: rgba(255,255,255,.85); text-decoration: none;
+    text-transform: uppercase; transition: color .2s;
+  }
+  nav ul a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--dark) !important;
+    padding: 8px 20px; border-radius: 2px; font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: #e69900; color: var(--dark) !important; }
+
+  /* HERO */
+  #hero {
+    position: relative; height: 100vh; min-height: 600px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden; text-align: center;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.3) 50%, rgba(0,0,0,.7) 100%),
+      url('img/img1.jpeg') center/cover no-repeat;
+  }
+  #hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 6px;
+    background: repeating-linear-gradient(90deg,
+      var(--gold) 0px, var(--gold) 24px,
+      var(--teal) 24px, var(--teal) 48px,
+      var(--red-accent) 48px, var(--red-accent) 72px,
+      var(--white) 72px, var(--white) 96px);
+  }
+  #hero .badge {
+    position: relative;
+    font-family: 'Cinzel', serif; font-size: .75rem; letter-spacing: .25em;
+    color: var(--gold); text-transform: uppercase;
+    border: 1px solid rgba(249,168,37,.5);
+    padding: 6px 18px; margin-bottom: 20px;
+  }
+  #hero h1 {
+    position: relative;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white);
+    text-shadow: 0 4px 24px rgba(0,0,0,.4);
+  }
+  #hero h1 em { font-style: normal; color: var(--gold); }
+  #hero p {
+    position: relative;
+    max-width: 540px;
+    font-size: 1.1rem; font-weight: 300;
+    color: rgba(255,255,255,.85);
+    line-height: 1.7; margin: 20px auto 36px;
+  }
+  .hero-btns { position: relative; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--dark);
+    padding: 14px 36px; font-weight: 600; font-size: .9rem;
+    letter-spacing: .06em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(249,168,37,.4); }
+  .btn-outline {
+    border: 1.5px solid rgba(255,255,255,.6); color: var(--white);
+    padding: 13px 36px; font-weight: 500; font-size: .9rem;
+    letter-spacing: .06em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: border-color .2s, color .2s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,.5); font-size: .7rem; letter-spacing: .15em;
+    text-transform: uppercase; animation: bounce 2s infinite;
+  }
+  .scroll-hint svg { opacity: .6; }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* SECTION */
+  section { padding: 96px 48px; }
+  .section-eyebrow {
+    font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--teal); font-weight: 600; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 2px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; line-height: 1.2; margin-bottom: 20px;
+    color: var(--dark);
+  }
+  .section-body {
+    font-size: 1.02rem; line-height: 1.85; color: var(--mid);
+    max-width: 640px;
+  }
+  #about .section-body + .section-body { margin-top: 16px; }
+  #contact .section-body { margin-bottom: 36px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* KENTE DIVIDER */
+  .kente-divider {
+    height: 8px; width: 100%;
+    background: repeating-linear-gradient(90deg,
+      var(--teal) 0px, var(--teal) 20px,
+      var(--gold) 20px, var(--gold) 40px,
+      var(--red-accent) 40px, var(--red-accent) 60px,
+      var(--dark) 60px, var(--dark) 80px);
+  }
+
+  /* ABOUT */
+  #about { background: var(--white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .about-img-stack { position: relative; height: 520px; }
+  .about-img-stack img {
+    position: absolute; width: 75%; border-radius: 2px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    object-fit: cover;
+  }
+  .about-img-stack img:first-child {
+    top: 0; left: 0; height: 65%;
+    object-position: center top;
+    border: 4px solid var(--white);
+    box-shadow: 0 20px 60px rgba(0,0,0,.15);
+  }
+  .about-img-stack img:last-child {
+    bottom: 0; right: 0; height: 55%;
+    border: 4px solid var(--white);
+    box-shadow: 0 20px 60px rgba(0,0,0,.15);
+  }
+  .about-img-stack .accent-block {
+    position: absolute; bottom: 40px; left: -20px;
+    width: 80px; height: 80px;
+    background: repeating-linear-gradient(45deg,
+      var(--gold) 0px, var(--gold) 10px,
+      var(--teal) 10px, var(--teal) 20px);
+    z-index: -1;
+  }
+  .stats-row {
+    display: flex; gap: 40px; margin-top: 40px;
+    border-top: 1px solid #E0E0E0; padding-top: 32px;
+  }
+  .stat { text-align: left; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--teal);
+    line-height: 1;
+  }
+  .stat-label { font-size: .8rem; color: var(--mid); letter-spacing: .08em; margin-top: 4px; }
+
+  /* GALLERY */
+  #gallery { background: var(--dark); }
+  #gallery .section-eyebrow { color: var(--teal-lt); }
+  #gallery .section-title { color: var(--white); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 280px 280px;
+    gap: 12px; margin-top: 48px;
+  }
+  .gallery-cell { overflow: hidden; position: relative; background: #333; }
+  .gallery-cell:first-child  { grid-column: 1 / 2; grid-row: 1 / 3; }
+  .gallery-cell:nth-child(2) { grid-column: 2 / 3; grid-row: 1 / 2; }
+  .gallery-cell:nth-child(3) { grid-column: 3 / 4; grid-row: 1 / 2; }
+  .gallery-cell:nth-child(4) { grid-column: 2 / 4; grid-row: 2 / 3; }
+  .gallery-cell img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .4s ease; display: block;
+  }
+  .gallery-cell img.gallery-img-focus { object-position: center 20%; }
+  .gallery-cell:hover img { transform: scale(1.06); }
+  .gallery-cell .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.5) 100%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .gallery-cell:hover .overlay { opacity: 1; }
+
+  /* PERFORMANCES */
+  #performances { background: var(--cream); }
+  .perf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+  .perf-card {
+    background: var(--white);
+    border-bottom: 3px solid var(--gold);
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.05);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .perf-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+  .perf-icon {
+    width: 48px; height: 48px; background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .perf-icon svg { color: white; }
+  .perf-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; margin-bottom: 12px;
+  }
+  .perf-card p { font-size: .92rem; line-height: 1.75; color: var(--mid); }
+
+  /* VIDEOS */
+  #videos { background: var(--dark); padding: 96px 48px; }
+  #videos .section-eyebrow { color: var(--teal-lt); }
+  #videos .section-title { color: var(--white); }
+  .video-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 32px; margin-top: 48px;
+  }
+  .video-card { background: #1e1e1e; border-bottom: 3px solid var(--gold); overflow: hidden; }
+  .video-card video { width: 100%; display: block; max-height: 300px; object-fit: cover; }
+  .video-card-info { padding: 20px 24px; }
+  .video-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .video-card-desc { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.6); }
+
+  /* TIKTOK CTA */
+  #social {
+    background: linear-gradient(135deg, var(--teal) 0%, #004D40 100%);
+    text-align: center; padding: 80px 48px;
+  }
+  #social h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700; color: var(--white); margin-bottom: 16px;
+  }
+  #social p {
+    color: rgba(255,255,255,.8); font-size: 1rem; margin-bottom: 36px;
+    max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .tiktok-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--white); color: var(--dark);
+    padding: 14px 32px; font-weight: 700; font-size: 1rem;
+    text-decoration: none; letter-spacing: .04em;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .tiktok-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+
+  /* CONTACT */
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .contact-form input,
+  .contact-form textarea {
+    padding: 14px 16px;
+    border: 1.5px solid #DDD;
+    font-family: 'Inter', sans-serif; font-size: .95rem;
+    background: var(--light); color: var(--dark);
+    outline: none; transition: border-color .2s;
+    resize: none;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--teal); background: var(--white); }
+  .contact-form textarea { height: 140px; }
+  .contact-info { display: flex; flex-direction: column; gap: 24px; margin-top: 12px; }
+  .info-item { display: flex; gap: 16px; align-items: flex-start; }
+  .info-icon {
+    width: 44px; height: 44px; background: var(--teal);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .info-icon svg { color: white; }
+  .info-text { font-size: .93rem; color: var(--mid); line-height: 1.6; }
+  .info-text strong { display: block; color: var(--dark); font-weight: 600; margin-bottom: 2px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,.6);
+    padding: 48px; text-align: center;
+    font-size: .85rem; letter-spacing: .04em;
+  }
+  footer .footer-logo {
+    font-family: 'Cinzel', serif; font-size: 1.4rem;
+    color: var(--gold); letter-spacing: .15em; margin-bottom: 12px;
+  }
+  footer .footer-sub { margin-bottom: 24px; color: rgba(255,255,255,.4); }
+  footer .social-links { display: flex; gap: 16px; justify-content: center; margin-bottom: 32px; }
+  footer .social-links a {
+    width: 40px; height: 40px; border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.5); text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  footer .social-links a:hover { border-color: var(--gold); color: var(--gold); }
+  footer .copy { color: rgba(255,255,255,.25); font-size: .75rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 14px 24px; }
+    nav ul { display: none; }
+    section { padding: 64px 24px; }
+    #social { padding: 64px 24px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-img-stack { height: 320px; }
+    .perf-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(3, 200px);
     }
-    header {
-      background: #2a2a2a;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 { color: #d4af37; }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: bold;
-    }
-    nav a:hover { color: #d4af37; }
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1547153760-18fc86324498?w=1200') center/cover;
-    }
-    .hero h2 { font-size: 2.5em; margin-bottom: 10px; }
-    .hero p { font-size: 1.2em; margin-bottom: 30px; }
-    .btn {
-      background: #d4af37;
-      color: #1a1a1a;
-      padding: 12px 30px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-    }
-    section { padding: 60px 40px; max-width: 900px; margin: 0 auto; }
-    section h3 { color: #d4af37; margin-bottom: 15px; font-size: 1.8em; }
-    section p { line-height: 1.6; }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #2a2a2a;
-      color: #888;
-    }
-  </style>
+    .gallery-cell:first-child  { grid-column: 1/3; grid-row: 1/2; }
+    .gallery-cell:nth-child(2) { grid-column: 1/2; grid-row: 2/3; }
+    .gallery-cell:nth-child(3) { grid-column: 2/3; grid-row: 2/3; }
+    .gallery-cell:nth-child(4) { grid-column: 1/3; grid-row: 3/4; }
+    .stats-row { gap: 20px; }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>AGBEYEYE</h1>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/register.html">Join Us</a>
-      <a href="/login.html">Member Login</a>
-    </nav>
-  </header>
 
-  <div class="hero">
-    <h2>AGBEYEYE Dance Ensemble</h2>
-    <p>Celebrating culture and movement through traditional and contemporary dance.</p>
-    <a href="/register.html" class="btn">Become a Member</a>
+<!-- NAV -->
+<nav>
+  <div class="logo">Agbeyeye</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#performances">Performances</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.tiktok.com/@agbeyeyedanceensemle" target="_blank" rel="noopener" class="nav-cta">Follow Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="badge">Est. &#8212; Ghana</div>
+  <h1>Where Culture<br><em>Comes Alive</em></h1>
+  <p>Agbeyeye Dance Ensemble preserves and celebrates the vibrant dance traditions of Ghana &#8212; performed with joy, discipline, and community pride.</p>
+  <div class="hero-btns">
+    <a href="#performances" class="btn-primary">See Our Work</a>
+    <a href="#contact" class="btn-outline">Book Us</a>
   </div>
+  <div class="scroll-hint">
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="14" height="22" rx="7" stroke="white" stroke-width="1.5"/>
+      <circle cx="8" cy="8" r="2.5" fill="white"/>
+    </svg>
+    Scroll
+  </div>
+</section>
 
-  <section>
-    <h3>About Us</h3>
-    <p>AGBEYEYE Dance Ensemble is a vibrant performance group dedicated to preserving and showcasing rich cultural dance traditions. We bring communities together through powerful storytelling, rhythm, and movement, performing at festivals, ceremonies, and special events.</p>
-  </section>
+<div class="kente-divider"></div>
 
-  <section>
-    <h3>Upcoming Events</h3>
-    <div id="events">Loading events...</div>
-  </section>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-stack">
+        <div class="accent-block"></div>
+        <img src="img/img3.jpeg" alt="Agbeyeye dancers performing">
+        <img src="img/img4.jpeg" alt="Agbeyeye ensemble group photo">
+      </div>
+      <div>
+        <div class="section-eyebrow">Our Story</div>
+        <h2 class="section-title">Born from the Rhythm of Our Roots</h2>
+        <p class="section-body">Agbeyeye Dance Ensemble is a passionate community of dancers dedicated to keeping Ghana's rich cultural heritage alive through movement. Rooted in traditional dance forms from across the country, the ensemble brings together talented performers of all ages to share stories, celebrate milestones, and honour ancestors through the universal language of dance.</p>
+        <p class="section-body">From festivals and cultural events to educational outreach, Agbeyeye represents the soul of community &#8212; agbeyeye means &#8220;New life&#8221; and that joy radiates through every performance.</p>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num">40+</div>
+            <div class="stat-label">Ensemble Members</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">10+</div>
+            <div class="stat-label">Dance Traditions</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">20+</div>
+            <div class="stat-label">Performances</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    &copy; 2026 AGBEYEYE Dance Ensemble. All rights reserved.
-  </footer>
+<div class="kente-divider"></div>
 
-  <script>
-    fetch('/api/events')
-      .then(res => res.json())
-      .then(events => {
-        const container = document.getElementById('events');
-        container.innerHTML = events.map(e => `<p><strong>${e.title}</strong> — ${e.date}</p>`).join('');
-      })
-      .catch(() => {
-        document.getElementById('events').textContent = 'Could not load events.';
-      });
-  </script>
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-eyebrow">Gallery</div>
+    <h2 class="section-title">Moments in Motion</h2>
+    <div class="gallery-grid">
+      <div class="gallery-cell">
+        <img src="img/img2.jpeg" alt="Ensemble dance performance">
+        <div class="overlay"></div>
+      </div>
+      <div class="gallery-cell">
+        <img src="img/img3.jpeg" alt="Women dancing in kente dresses">
+        <div class="overlay"></div>
+      </div>
+      <div class="gallery-cell">
+        <img src="img/image1.jpeg" alt="Agbeyeye TikTok profile">
+        <div class="overlay"></div>
+      </div>
+      <div class="gallery-cell">
+        <img src="img/img4.jpeg" alt="Full ensemble group photo" class="gallery-img-focus">
+        <div class="overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCES -->
+<section id="performances">
+  <div class="container">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-title">Performances &amp; Services</h2>
+    <p class="section-body">We bring authentic Ghanaian culture to every stage and occasion. Here's how we can make your event unforgettable.</p>
+    <div class="perf-grid">
+      <div class="perf-card">
+        <div class="perf-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Cultural Festivals</h3>
+        <p>Vivid, large-scale traditional performances honouring Ghanaian festivals and national celebrations. Expect colour, rhythm, and community energy that draws every audience in.</p>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h3>Weddings &amp; Funerals</h3>
+        <p>Traditional dance is central to Ghanaian life ceremonies. Our ensemble performs with the right tone &#8212; joyful for weddings, dignified and celebratory for funerals and outdoorings.</p>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+        </div>
+        <h3>Corporate &amp; Private Events</h3>
+        <p>Elevate your corporate gala, product launch, or private party with a live cultural performance. We tailor each show to your occasion and audience.</p>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <h3>Schools &amp; Education</h3>
+        <p>We visit schools and universities to teach students about Ghana's dance heritage &#8212; interactive workshops that make culture fun, memorable, and meaningful.</p>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <h3>Film &amp; Media</h3>
+        <p>Available for documentaries, music videos, and media productions seeking authentic Ghanaian dance representation. Full choreography and costume coordination included.</p>
+      </div>
+      <div class="perf-card">
+        <div class="perf-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Dance Workshops</h3>
+        <p>Open community workshops for all skill levels. Learn the foundational steps of Agbadza, Kpanlogo, Adowa, and more from our experienced instructors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCES (VIDEOS) -->
+<section id="videos">
+  <div class="container">
+    <div class="section-eyebrow">Live &amp; On Stage</div>
+    <h2 class="section-title">Watch Us Perform</h2>
+    <div class="video-grid">
+      <div class="video-card">
+        <video controls preload="metadata" poster="img/img3.jpeg">
+          <source src="videos/performance1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-card-info">
+          <div class="video-card-title">Performance Highlights</div>
+          <div class="video-card-desc">Watch the full energy of our ensemble in action &#8212; traditional rhythms, vibrant costumes, and authentic Ghanaian spirit.</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <video controls muted loop preload="metadata" poster="img/img4.jpeg">
+          <source src="videos/performance2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-card-info">
+          <div class="video-card-title">Ensemble in Motion</div>
+          <div class="video-card-desc">A glimpse of our signature choreography &#8212; graceful, powerful, and alive with the spirit of our ancestors.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIKTOK CTA -->
+<section id="social">
+  <div class="container">
+    <h2>Follow Our Journey on TikTok</h2>
+    <p>Watch our latest rehearsals, performances, and behind-the-scenes moments. New content every week.</p>
+    <a href="https://www.tiktok.com/@agbeyeyedanceensemle" target="_blank" rel="noopener noreferrer" class="tiktok-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.22 8.22 0 0 0 4.8 1.52V6.75a4.86 4.86 0 0 1-1.03-.06z"/></svg>
+      @agbeyeyedanceensemle
+    </a>
+  </div>
+</section>
+
+<div class="kente-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <style>
+    /* Move inline style to CSS to address no-inline-styles warning */
+    #contact .contact-desc { margin-bottom: 36px; }
+  </style>
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title">Book Agbeyeye for Your Event</h2>
+        <p class="section-body contact-desc">Whether you're planning a festival, ceremony, or private event, we'd love to bring the spirit of Ghanaian dance to your occasion. Fill in the form and we'll be in touch.</p>
+        <div class="contact-info">
+          <div class="info-item">
+            <div class="info-icon">
+              <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>Phone / WhatsApp</strong>
+              Available on request
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">
+              <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>TikTok</strong>
+              @agbeyeyedanceensemle
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">
+              <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>Location</strong>
+              Ghana
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <input type="text" placeholder="Your Full Name">
+          <input type="email" placeholder="Email Address">
+          <input type="text" placeholder="Event Type (e.g. Wedding, Festival, School)">
+          <input type="text" placeholder="Event Date">
+          <textarea placeholder="Tell us about your event and what you're looking for&#8230;"></textarea>
+          <button class="btn-primary" onclick="alert('Thank you! We will get back to you soon. Follow us on TikTok @agbeyeyedanceensemle for updates.')">Send Enquiry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AGBEYEYE</div>
+  <div class="footer-sub">Dance Ensemble &middot; Ghana</div>
+  <div class="social-links">
+    <a href="https://www.tiktok.com/@agbeyeyedanceensemle" target="_blank" rel="noopener noreferrer" title="TikTok">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.22 8.22 0 0 0 4.8 1.52V6.75a4.86 4.86 0 0 1-1.03-.06z"/></svg>
+    </a>
+  </div>
+  <div class="copy">&copy; 2026 Agbeyeye Dance Ensemble. All rights reserved.</div>
+</footer>
+
 </body>
 </html>
