@@ -9,6 +9,15 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+// ADD THIS CODE HERE
+app.get('/api/events', (req, res) => {
+  res.json([
+    {
+      title: "Agbeyeye Dance Festival",
+      date: "2026-07-15"
+    }
+  ]);
+});
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
@@ -24,7 +33,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 app.get('/', (req, res) => {
-  res.send('Hello, world! Your Express server is working 🎉');
+  res.send('Hello, world! Your Express server is running.');
 });
 
 app.post('/api/register', async (req, res) => {
