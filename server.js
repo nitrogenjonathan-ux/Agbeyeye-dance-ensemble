@@ -51,6 +51,7 @@ app.post('/api/register', async (req, res) => {
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
+    console.error('Register error:', err);
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
@@ -71,6 +72,7 @@ app.post('/api/login', async (req, res) => {
 
     res.json({ message: 'Login successful', user: { name: user.name, email: user.email } });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
