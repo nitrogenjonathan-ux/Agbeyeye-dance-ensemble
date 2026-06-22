@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGBEYEYE Dance Ensemble</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: white;
+    }
+    header {
+      background: #2a2a2a;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { color: #d4af37; }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    nav a:hover { color: #d4af37; }
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1547153760-18fc86324498?w=1200') center/cover;
+    }
+    .hero h2 { font-size: 2.5em; margin-bottom: 10px; }
+    .hero p { font-size: 1.2em; margin-bottom: 30px; }
+    .btn {
+      background: #d4af37;
+      color: #1a1a1a;
+      padding: 12px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+    section { padding: 60px 40px; max-width: 900px; margin: 0 auto; }
+    section h3 { color: #d4af37; margin-bottom: 15px; font-size: 1.8em; }
+    section p { line-height: 1.6; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #2a2a2a;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AGBEYEYE</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/register.html">Join Us</a>
+      <a href="/login.html">Member Login</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h2>AGBEYEYE Dance Ensemble</h2>
+    <p>Celebrating culture and movement through traditional and contemporary dance.</p>
+    <a href="/register.html" class="btn">Become a Member</a>
+  </div>
+
+  <section>
+    <h3>About Us</h3>
+    <p>AGBEYEYE Dance Ensemble is a vibrant performance group dedicated to preserving and showcasing rich cultural dance traditions. We bring communities together through powerful storytelling, rhythm, and movement, performing at festivals, ceremonies, and special events.</p>
+  </section>
+
+  <section>
+    <h3>Upcoming Events</h3>
+    <div id="events">Loading events...</div>
+  </section>
+
+  <footer>
+    &copy; 2026 AGBEYEYE Dance Ensemble. All rights reserved.
+  </footer>
+
+  <script>
+    fetch('/api/events')
+      .then(res => res.json())
+      .then(events => {
+        const container = document.getElementById('events');
+        container.innerHTML = events.map(e => `<p><strong>${e.title}</strong> — ${e.date}</p>`).join('');
+      })
+      .catch(() => {
+        document.getElementById('events').textContent = 'Could not load events.';
+      });
+  </script>
+</body>
+</html>
