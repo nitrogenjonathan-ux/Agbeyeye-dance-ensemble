@@ -570,6 +570,7 @@
   <style>
     /* Move inline style to CSS to address no-inline-styles warning */
     #contact .contact-desc { margin-bottom: 36px; }
+    #contactStatus { margin-top: 10px; }
   </style>
   <div class="container">
     <div class="contact-grid">
@@ -608,14 +609,15 @@
         </div>
       </div>
       <div>
-        <div class="contact-form">
-          <input type="text" placeholder="Your Full Name">
-          <input type="email" placeholder="Email Address">
-          <input type="text" placeholder="Event Type (e.g. Wedding, Festival, School)">
-          <input type="text" placeholder="Event Date">
-          <textarea placeholder="Tell us about your event and what you're looking for&#8230;"></textarea>
-          <button class="btn-primary" onclick="alert('Thank you! We will get back to you soon. Follow us on TikTok @agbeyeyedanceensemle for updates.')">Send Enquiry</button>
-        </div>
+        <form class="contact-form" id="contactForm">
+  <input type="text" id="contactName" placeholder="Your Full Name" required>
+  <input type="email" id="contactEmail" placeholder="Email Address" required>
+  <input type="text" id="contactEventType" placeholder="Event Type (e.g. Wedding, Festival, School)">
+  <input type="text" id="contactEventDate" placeholder="Event Date">
+  <textarea id="contactMessage" placeholder="Tell us about your event and what you're looking for…"></textarea>
+  <button type="submit" class="btn-primary">Send Enquiry</button>
+  <p id="contactStatus"></p>
+</form>
       </div>
     </div>
   </div>
@@ -632,6 +634,42 @@
   </div>
   <div class="copy">&copy; 2026 Agbeyeye Dance Ensemble. All rights reserved.</div>
 </footer>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const eventType = document.getElementById('contactEventType').value;
+    const eventDate = document.getElementById('contactEventDate').value;
+    const message = document.getElementById('contactMessage').value;
+
+    const statusEl = document.getElementById('contactStatus');
+    statusEl.style.color = '#4DB6AC';
+    statusEl.textContent = 'Sending...';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, eventType, eventDate, message })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        statusEl.style.color = '#4DB6AC';
+        statusEl.textContent = data.message;
+        document.getElementById('contactForm').reset();
+      } else {
+        statusEl.style.color = '#C0392B';
+        statusEl.textContent = data.error;
+      }
+    } catch (err) {
+      statusEl.style.color = '#C0392B';
+      statusEl.textContent = 'Network error. Please try again.';
+    }
+  });
+</script>
 </body>
 </html>

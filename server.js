@@ -29,6 +29,16 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
+const enquirySchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  eventType: { type: String },
+  eventDate: { type: String },
+  message: { type: String },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const Enquiry = mongoose.model('Enquiry', enquirySchema);
 
 const User = mongoose.model('User', userSchema);
 
@@ -74,6 +84,20 @@ app.post('/api/login', async (req, res) => {
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ error: 'Something went wrong' });
+  }
+});
+
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, eventType, eventDate, message } = req.body;
+
+    const newEnquiry = new Enquiry({ name, email, eventType, eventDate, message });
+    await newEnquiry.save();
+
+    res.status(201).json({ message: 'Enquiry received! We will get back to you soon.' });
+  } catch (err) {
+    console.error('Contact form error:', err);
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 });
 
