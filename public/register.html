@@ -45,9 +45,14 @@
 <body>
   <form id="registerForm">
     <h2>Join AGBEYEYE Dance Ensemble</h2>
+    <label for="name">Full Name</label>
     <input type="text" id="name" placeholder="Full Name" required>
+    <label for="email">Email</label>
     <input type="email" id="email" placeholder="Email" required>
+    <label for="password">Password</label>
     <input type="password" id="password" placeholder="Password" required>
+    <label for="image">Profile Image</label>
+    <input type="file" id="image" accept="image/*" required>
     <button type="submit">Register</button>
     <p id="message"></p>
   </form>

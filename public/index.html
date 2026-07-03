@@ -544,7 +544,7 @@
         </video>
         <div class="video-card-info">
           <div class="video-card-title">Ensemble in Motion</div>
-          <div class="video-card-desc">A glimpse of our signature choreography &#8212; graceful, powerful, and alive with the spirit of our ancestors.</div>
+          <div class="video-card-desc">A gliour signature choreographympse of  &#8212; graceful, powerful, and alive with the spirit of our ancestors.</div>
         </div>
       </div>
       <div class="video-card">
@@ -553,8 +553,8 @@
     Your browser does not support the video tag.
   </video>
   <div class="video-card-info">
-    <div class="video-card-title">Your Video Title Here</div>
-    <div class="video-card-desc">Your description here.</div>
+    <div class="video-card-title">Ensemble in Motion</div>
+    <div class="video-card-desc">A gliour signature choreographympse.</div>
   </div>
 </div>
       </div>
@@ -625,6 +625,7 @@
   <input type="email" id="contactEmail" placeholder="Email Address" required>
   <input type="text" id="contactEventType" placeholder="Event Type (e.g. Wedding, Festival, School)">
   <input type="text" id="contactEventDate" placeholder="Event Date">
+  <input type="tel" id="contactPhone" placeholder="Phone Number">
   <textarea id="contactMessage" placeholder="Tell us about your event and what you're looking for…"></textarea>
   <button type="submit" class="btn-primary">Send Enquiry</button>
   <p id="contactStatus"></p>
@@ -651,6 +652,7 @@
 
     const name = document.getElementById('contactName').value;
     const email = document.getElementById('contactEmail').value;
+    const phone = document.getElementById('contactPhone').value;
     const eventType = document.getElementById('contactEventType').value;
     const eventDate = document.getElementById('contactEventDate').value;
     const message = document.getElementById('contactMessage').value;
@@ -663,7 +665,7 @@
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, eventType, eventDate, message })
+        body: JSON.stringify({ name, email, phone, eventType, eventDate, message })
       });
 
       const data = await response.json();

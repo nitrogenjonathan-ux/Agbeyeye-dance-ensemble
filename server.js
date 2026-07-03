@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const path = require('path');
+const { type } = require('os');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,6 +35,7 @@ const enquirySchema = new mongoose.Schema({
   email: { type: String, required: true },
   eventType: { type: String },
   eventDate: { type: String },
+  contact: { type: Number },
   message: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
@@ -89,7 +91,7 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/contact', async (req, res) => {
   try {
-    const { name, email, eventType, eventDate, message } = req.body;
+    const { name, email, eventType, eventDate,contact, message } = req.body;
 
     const newEnquiry = new Enquiry({ name, email, eventType, eventDate, message });
     await newEnquiry.save();
